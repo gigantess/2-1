@@ -154,7 +154,7 @@ def show_detail():
         print("숫자를 입력해야 합니다.")
 
 def toggle_favorite():
-    print("\n--- 즐겨찾기 토글 ---")
+    print("\n--- 즐겨찾기 추가/삭제 ---")
     if not prompts:
         print("등록된 프롬프트가 없습니다.")
         return
@@ -265,7 +265,7 @@ def show_menu():
     print("3. 카테고리별 보기")
     print("4. 프롬프트 검색")
     print("5. 프롬프트 상세 보기")
-    print("6. 즐겨찾기 토글")
+    print("6. 즐겨찾기 추가/삭제")
     print("7. 즐겨찾기 목록 보기")
     print("8. Markdown 내보내기")
     print("9. 인기 프롬프트 (조회수순)")
