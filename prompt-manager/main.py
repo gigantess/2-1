@@ -134,7 +134,7 @@ def show_detail():
     if not prompts:
         print("등록된 프롬프트가 없습니다.")
         return
-        
+    show_list()
     try:
         idx = int(input("상세보기 할 프롬프트 번호를 입력하세요: ")) - 1
         if 0 <= idx < len(prompts):
@@ -158,7 +158,7 @@ def toggle_favorite():
     if not prompts:
         print("등록된 프롬프트가 없습니다.")
         return
-        
+    show_list()
     try:
         idx = int(input("즐겨찾기를 설정/해제할 프롬프트 번호를 입력하세요: ")) - 1
         if 0 <= idx < len(prompts):
@@ -208,6 +208,10 @@ def top_views():
 
 def edit_prompt():
     print("\n--- 프롬프트 수정 ---")
+    if not prompts:
+        print("등록된 프롬프트가 없습니다.")
+        return
+    show_list()
     try:
         idx = int(input("수정할 프롬프트 번호를 입력하세요: ")) - 1
         if 0 <= idx < len(prompts):
@@ -233,6 +237,10 @@ def edit_prompt():
 
 def delete_prompt():
     print("\n--- 프롬프트 삭제 ---")
+    if not prompts:
+        print("등록된 프롬프트가 없습니다.")
+        return
+    show_list()
     try:
         idx = int(input("삭제할 프롬프트 번호를 입력하세요: ")) - 1
         if 0 <= idx < len(prompts):
