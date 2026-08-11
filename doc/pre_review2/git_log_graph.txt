@@ -1,0 +1,27 @@
+* 37384b8 사전 검토 결과 반영하여 개발 환경 버전 기록 업데이트
+* b3cb75d docs: Update Python and Git versions to match current environment
+* 6b8a4f0 docs: Update development environment to Antigravity IDE and Windows OS
+* 6de309b docs: Update development environment to Antigravity IDE and Windows
+* 568ad7e feat: Apply improvement plan (docstrings, validations, README updates)
+* 2efad72 docs: Add improvement plan based on pre-review.md
+* 3866e34 프롬프트 관리자 실행 화면 캡쳐 추가
+* 1b7a28d style: Rename '즐겨찾기 토글' to '즐겨찾기 추가/삭제' for better readability
+* 034133b 프롬프트 상세보기, 즐겨찾기 토글, 프롬프트 수정, 프롬프트 삭제 등에서 프롬프트 목록을 보여주도록 개선
+* 2ca4125 feat: Show prompt list before asking for prompt number in UI
+* a3b7f2f git log --oneline --graph.png 추가
+* 0ef1ea7 docs: Restore and merge previously deleted sections (Git config, Data structure, Commits)
+* 200e8d4 docs: Update root README.md with newly implemented features and Git steps
+* e1ad4e8 프롬프트 매니저에 예시 프롬프트 반영하여 프롬프트 고도화
+* 774c089 feat: Update default prompt examples based on prompt_example files
+* 0672e22 프롬프트 예시 정리
+* 7133887 feat: Add CRUD edit/delete and view count tracking features
+* 92fdc1a feat: Add JSON persistence and Markdown export capabilities
+* 96e3a13 docs: Complete README.md with project overview and user guide
+* 5232e12 feat: Implement favorite toggle and favorite list view functions
+* 11efe45 feat: Implement prompt detail view function
+* 443bd33 feat: Initialize prompt-manager with initial features (Step 3 to 4.5)
+* 1b04310 프롬프트 매니저 폴더에 gitignore 파일 추가
+* 94383aa branch1 병합
+* eda135f 계획 수립
+* 58f1069 증빙 자료 스샷 추가
+* 5ee5cc3 first commit
