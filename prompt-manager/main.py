@@ -95,6 +95,28 @@ def search_prompt():
         fav_star = "⭐" if p["favorite"] else "  "
         print(f"[{i}] {fav_star} [{p['category']}] {p['title']}")
 
+def show_detail():
+    print("\n--- 프롬프트 상세 보기 ---")
+    if not prompts:
+        print("등록된 프롬프트가 없습니다.")
+        return
+        
+    try:
+        idx = int(input("상세보기 할 프롬프트 번호를 입력하세요: ")) - 1
+        if 0 <= idx < len(prompts):
+            p = prompts[idx]
+            print("-" * 30)
+            print(f"제목: {p['title']}")
+            print(f"카테고리: {p['category']}")
+            print(f"즐겨찾기: {'⭐' if p['favorite'] else 'X'}")
+            print("-" * 30)
+            print(p['content'])
+            print("-" * 30)
+        else:
+            print("유효하지 않은 번호입니다.")
+    except ValueError:
+        print("숫자를 입력해야 합니다.")
+
 def show_menu():
     print("\n" + "="*30)
     print("프롬프트 관리자")
@@ -125,6 +147,8 @@ def main():
             show_by_category()
         elif choice == '4':
             search_prompt()
+        elif choice == '5':
+            show_detail()
         else:
             print("준비 중인 기능입니다.")
 
