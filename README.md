@@ -187,3 +187,22 @@ git log --oneline --graph
 - [x] 개발 환경 설정 스크린샷: Antigravity IDE, Python 3.14+ 버전, Git config 설정 화면
 - [x] 프로그램 실행 결과 스크린샷: 메뉴, 프롬프트 추가, 목록, 검색, 상세 보기, 즐겨찾기 실행 화면
 - [x] Git 로그 스크린샷: `git log --oneline --graph` 실행 화면 (최소 10개 커밋 및 브랜치 병합 내역 포함)
+
+## 📸 9. 스크린샷 첨부
+
+### 9.1 개발 환경 및 Git 설정
+![Python Install](./python-install.png)
+![Git Install](./git-install.png)
+![Git Remote Setting](./git-remote-repo-setting.png)
+
+### 9.2 Git 필수 명령어 및 로그
+![Git Clone](./git-clone.png)
+![Git Add](./git-add.png)
+![Git Remote First Push](./git-remote-first-push.png)
+![Git Switch Main](./git-switch-main.png)
+![Git Merge](./git-merge.png)
+![Git Log Graph](./git%20log%20--oneline%20--graph.png)
+
+### 9.3 프로그램 실행 결과
+![Prompt Manager 1](./promptmanager-1.png)
+![Prompt Manager 2](./promptmanager-2.png)
