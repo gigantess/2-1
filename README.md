@@ -10,7 +10,7 @@
 GenAI 활용에 필수적인 프롬프트(텍스트 요약, 이미지 생성, 페르소나 부여 등)를 체계적으로 관리, 분류, 검색, 탐색하는 프로그램입니다.
 
 ### 주요 학습 달성 목표
-- **VSCode & Python**: Python 3.10 이상 개발 환경 구축 및 함수 기반 모듈화 파이썬 프로그래밍 구현.
+- **Antigravity IDE & Python**: Python 3.10 이상 개발 환경 구축 및 함수 기반 모듈화 파이썬 프로그래밍 구현.
 - **Git & GitHub 필수 명령어**: Version Control System(VCS)의 원리를 이해하고 필수 명령어 8종 실습 완료.
 - **브랜치 활용 전략**: 기능 개발 브랜치(`feature/list-prompts`)를 생성, 체크아웃(`checkout`), 병합(`merge`)하여 코드 이력을 체계적으로 관리.
 
@@ -18,10 +18,10 @@ GenAI 활용에 필수적인 프롬프트(텍스트 요약, 이미지 생성, �
 
 ## 🛠 2. 개발 환경 구축 (Development Environment)
 
-* **Editor**: Visual Studio Code (VSCode)
-  * Extensions: Python Extension, Korean Language Pack
+* **Editor**: Antigravity IDE (Agentic Coding Environment)
 * **Language**: Python 3.10 이상
 * **VCS**: Git 2.x / GitHub
+* **OS**: Windows
 
 ### 개발 환경 점검 및 Git 초기 설정 명령어
 ```bash
