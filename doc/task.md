@@ -1,0 +1,14 @@
+- `[x]` Phase 2: 기본 설정 (git init, README.md, .gitignore)
+- `[ ]` Phase 3 & 4: 기능 구현 및 Git 브랜치 전략
+  - `[x]` Step 3.1: main.py 기본 데이터셋 추가
+  - `[x]` Step 3.2: 메인 메뉴 및 프로그램 루프 구현
+  - `[x]` Step 4.1: 새로운 프롬프트 추가 기능 구현
+  - `[x]` Step 4.2 & 4.3: feature/list-prompts 브랜치 생성 및 목록 보기 기능 구현, 병합
+  - `[x]` Step 4.4: 카테고리별 조회 기능 구현
+  - `[x]` Step 4.5: 검색 기능 구현
+  - `[x]` Step 4.6: 상세 보기 기능 구현
+  - `[x]` Step 4.7: 즐겨찾기 토글 및 모아보기 기능 구현
+  - `[x]` Step 4.8: README.md 최종 작성
+- `[ ]` Phase 5: 보너스 기능 구현
+  - `[x]` 보너스 1: JSON 영속화 및 Markdown 내보내기 기능
+  - `[x]` 보너스 2: 프롬프트 수정/삭제(CRUD) 기능 및 조회수 정렬 기능
