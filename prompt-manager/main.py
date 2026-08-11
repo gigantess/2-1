@@ -13,25 +13,31 @@ def load_prompts():
                 prompts = json.load(f)
         except json.JSONDecodeError:
             prompts = []
+        for p in prompts:
+            if 'views' not in p:
+                p['views'] = 0
     else:
         prompts = [
             {
                 "title": "Python 시작하기",
                 "content": "Python의 기본 문법과 특징을 설명해주세요.",
                 "category": "프로그래밍",
-                "favorite": False
+                "favorite": False,
+                "views": 0
             },
             {
                 "title": "Git 커밋 메시지 작성법",
                 "content": "좋은 Git 커밋 메시지를 작성하는 규칙 5가지를 알려주세요.",
                 "category": "개발도구",
-                "favorite": True
+                "favorite": True,
+                "views": 0
             },
             {
                 "title": "건강한 식단 추천",
                 "content": "직장인을 위한 일주일치 건강한 저녁 식단을 짜주세요.",
                 "category": "일상",
-                "favorite": False
+                "favorite": False,
+                "views": 0
             }
         ]
 
@@ -59,7 +65,8 @@ def add_prompt():
         "title": title,
         "content": content,
         "category": category,
-        "favorite": False
+        "favorite": False,
+        "views": 0
     })
     save_prompts()
     print("프롬프트가 성공적으로 추가되었습니다!")
@@ -125,10 +132,12 @@ def show_detail():
         idx = int(input("상세보기 할 프롬프트 번호를 입력하세요: ")) - 1
         if 0 <= idx < len(prompts):
             p = prompts[idx]
+            p['views'] += 1
+            save_prompts()
             print("-" * 30)
             print(f"제목: {p['title']}")
             print(f"카테고리: {p['category']}")
-            print(f"즐겨찾기: {'⭐' if p['favorite'] else 'X'}")
+            print(f"조회수: {p['views']} | 즐겨찾기: {'⭐' if p['favorite'] else 'X'}")
             print("-" * 30)
             print(p['content'])
             print("-" * 30)
@@ -180,6 +189,58 @@ def export_to_markdown():
                 f.write("---\n\n")
     print("마크다운 파일 내보내기가 완료되었습니다.")
 
+def top_views():
+    print("\n--- 인기 프롬프트 (조회수순) ---")
+    sorted_prompts = sorted(enumerate(prompts, 1), key=lambda x: x[1]['views'], reverse=True)
+    if not sorted_prompts:
+        print("등록된 프롬프트가 없습니다.")
+        return
+        
+    for i, p in sorted_prompts[:5]:  # Top 5
+        print(f"[{i}] 조회수: {p['views']} | [{p['category']}] {p['title']}")
+
+def edit_prompt():
+    print("\n--- 프롬프트 수정 ---")
+    try:
+        idx = int(input("수정할 프롬프트 번호를 입력하세요: ")) - 1
+        if 0 <= idx < len(prompts):
+            p = prompts[idx]
+            print(f"현재 제목: {p['title']}")
+            title = input("새 제목 (엔터 시 유지): ").strip()
+            if title: p['title'] = title
+            
+            print(f"현재 내용: {p['content']}")
+            content = input("새 내용 (엔터 시 유지): ").strip()
+            if content: p['content'] = content
+            
+            print(f"현재 카테고리: {p['category']}")
+            category = input("새 카테고리 (엔터 시 유지): ").strip()
+            if category: p['category'] = category
+            
+            save_prompts()
+            print("프롬프트가 수정되었습니다.")
+        else:
+            print("유효하지 않은 번호입니다.")
+    except ValueError:
+        print("숫자를 입력해야 합니다.")
+
+def delete_prompt():
+    print("\n--- 프롬프트 삭제 ---")
+    try:
+        idx = int(input("삭제할 프롬프트 번호를 입력하세요: ")) - 1
+        if 0 <= idx < len(prompts):
+            confirm = input(f"'{prompts[idx]['title']}' 프롬프트를 정말 삭제하시겠습니까? (y/n): ").strip().lower()
+            if confirm == 'y':
+                del prompts[idx]
+                save_prompts()
+                print("프롬프트가 삭제되었습니다.")
+            else:
+                print("삭제가 취소되었습니다.")
+        else:
+            print("유효하지 않은 번호입니다.")
+    except ValueError:
+        print("숫자를 입력해야 합니다.")
+
 def show_menu():
     print("\n" + "="*30)
     print("프롬프트 관리자")
@@ -192,6 +253,9 @@ def show_menu():
     print("6. 즐겨찾기 토글")
     print("7. 즐겨찾기 목록 보기")
     print("8. Markdown 내보내기")
+    print("9. 인기 프롬프트 (조회수순)")
+    print("10. 프롬프트 수정")
+    print("11. 프롬프트 삭제")
     print("0. 종료")
     print("="*30)
 
@@ -220,6 +284,12 @@ def main():
             show_favorites()
         elif choice == '8':
             export_to_markdown()
+        elif choice == '9':
+            top_views()
+        elif choice == '10':
+            edit_prompt()
+        elif choice == '11':
+            delete_prompt()
         else:
             print("준비 중인 기능입니다.")
 
