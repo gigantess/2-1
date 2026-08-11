@@ -1,24 +1,43 @@
 # prompt-manager/main.py
 
-prompts = [
-    {
-        "title": "Python 시작하기",
-        "content": "Python의 기본 문법과 특징을 설명해주세요.",
-        "category": "프로그래밍",
-        "favorite": False
-    },
-    {
-        "title": "Git 커밋 메시지 작성법",
-        "content": "좋은 Git 커밋 메시지를 작성하는 규칙 5가지를 알려주세요.",
-        "category": "개발도구",
-        "favorite": True
-    },
-    {
-        "title": "건강한 식단 추천",
-        "content": "직장인을 위한 일주일치 건강한 저녁 식단을 짜주세요.",
-        "category": "일상",
-        "favorite": False
-]
+import json
+import os
+
+DATA_FILE = 'prompts.json'
+
+def load_prompts():
+    global prompts
+    if os.path.exists(DATA_FILE):
+        try:
+            with open(DATA_FILE, 'r', encoding='utf-8') as f:
+                prompts = json.load(f)
+        except json.JSONDecodeError:
+            prompts = []
+    else:
+        prompts = [
+            {
+                "title": "Python 시작하기",
+                "content": "Python의 기본 문법과 특징을 설명해주세요.",
+                "category": "프로그래밍",
+                "favorite": False
+            },
+            {
+                "title": "Git 커밋 메시지 작성법",
+                "content": "좋은 Git 커밋 메시지를 작성하는 규칙 5가지를 알려주세요.",
+                "category": "개발도구",
+                "favorite": True
+            },
+            {
+                "title": "건강한 식단 추천",
+                "content": "직장인을 위한 일주일치 건강한 저녁 식단을 짜주세요.",
+                "category": "일상",
+                "favorite": False
+            }
+        ]
+
+def save_prompts():
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(prompts, f, ensure_ascii=False, indent=4)
 
 def add_prompt():
     print("\n--- 프롬프트 추가 ---")
@@ -42,6 +61,7 @@ def add_prompt():
         "category": category,
         "favorite": False
     })
+    save_prompts()
     print("프롬프트가 성공적으로 추가되었습니다!")
 
 def show_list():
@@ -127,6 +147,7 @@ def toggle_favorite():
         idx = int(input("즐겨찾기를 설정/해제할 프롬프트 번호를 입력하세요: ")) - 1
         if 0 <= idx < len(prompts):
             prompts[idx]['favorite'] = not prompts[idx]['favorite']
+            save_prompts()
             status = "설정" if prompts[idx]['favorite'] else "해제"
             print(f"'{prompts[idx]['title']}' 즐겨찾기가 {status}되었습니다.")
         else:
@@ -145,6 +166,20 @@ def show_favorites():
     for i, p in favorites:
         print(f"[{i}] ⭐ [{p['category']}] {p['title']}")
 
+def export_to_markdown():
+    categories = set(p['category'] for p in prompts)
+    for cat in categories:
+        filename = f"{cat}.md"
+        with open(filename, 'w', encoding='utf-8') as f:
+            f.write(f"# {cat} 프롬프트 모음\n\n")
+            cat_prompts = [p for p in prompts if p['category'] == cat]
+            for p in cat_prompts:
+                fav = "⭐" if p['favorite'] else ""
+                f.write(f"## {p['title']} {fav}\n\n")
+                f.write(f"{p['content']}\n\n")
+                f.write("---\n\n")
+    print("마크다운 파일 내보내기가 완료되었습니다.")
+
 def show_menu():
     print("\n" + "="*30)
     print("프롬프트 관리자")
@@ -156,10 +191,12 @@ def show_menu():
     print("5. 프롬프트 상세 보기")
     print("6. 즐겨찾기 토글")
     print("7. 즐겨찾기 목록 보기")
+    print("8. Markdown 내보내기")
     print("0. 종료")
     print("="*30)
 
 def main():
+    load_prompts()
     while True:
         show_menu()
         choice = input("메뉴를 선택하세요: ")
@@ -181,6 +218,8 @@ def main():
             toggle_favorite()
         elif choice == '7':
             show_favorites()
+        elif choice == '8':
+            export_to_markdown()
         else:
             print("준비 중인 기능입니다.")
 
