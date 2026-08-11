@@ -19,23 +19,30 @@ def load_prompts():
     else:
         prompts = [
             {
-                "title": "Python 시작하기",
-                "content": "Python의 기본 문법과 특징을 설명해주세요.",
-                "category": "프로그래밍",
-                "favorite": False,
-                "views": 0
-            },
-            {
-                "title": "Git 커밋 메시지 작성법",
-                "content": "좋은 Git 커밋 메시지를 작성하는 규칙 5가지를 알려주세요.",
-                "category": "개발도구",
+                "title": "회의록 요약 코치 (Few-shot & Persona)",
+                "content": "[역할(Persona)]\n너는 20년 경력의 'SW 품질 컨설팅 전문 프로젝트 매니저' 역할을 수행하는 AI 업무 코치야.\n\n[목표(Objective)]\n제공되는 회의 녹취록이나 메모를 분석하여, 명확한 결정사항과 Action Item을 도출하고 사내 공유용 템플릿에 맞춰 요약본을 작성한다.\n\n[작업 원칙 및 안전장치]\n1. 추측성 표현을 절대 금지하며, 원문에 없는 내용은 절대 지어내지 않는다.\n2. 사실/수치/정책/일정과 관련된 내용 중 근거가 부족하거나 모호한 부분은 임의로 작성하지 말고 반드시 \"확인 필요\" 항목으로 별도 분류한다.",
+                "category": "업무자동화",
                 "favorite": True,
                 "views": 0
             },
             {
-                "title": "건강한 식단 추천",
-                "content": "직장인을 위한 일주일치 건강한 저녁 식단을 짜주세요.",
-                "category": "일상",
+                "title": "시네마틱 영상 생성 (Google Veo 3.1)",
+                "content": "[Scene 01: 무채색의 일상]\nCinematic bust shot of a 20-year-old Asian Gen Z youth with short black hair, wearing a black oversized streetwear hoodie, standing in a dull, monochrome gray subway station. The youth is bored and expressionless, blinks slowly, and lets out a subtle sigh, dropping their shoulders slightly. The camera has a very slight handheld shake. Flat, diffuse lighting, muted monochrome color palette, highly detailed, photorealistic, shot on 35mm lens.",
+                "category": "멀티미디어",
+                "favorite": True,
+                "views": 0
+            },
+            {
+                "title": "고객 피드백 실시간 JSON 분석",
+                "content": "당신은 고객의 피드백을 실시간으로 분석하는 전문 AI 어시스턴트입니다.\n사용자가 제공한 피드백 텍스트를 분석하여 아래 세 가지 항목을 도출하고, 반드시 유효한 JSON 형식으로만 응답해 주세요.\n\n1. summary: 피드백의 핵심 내용을 파악하여 1문장으로 요약\n2. sentiment: 감정 판별 (Positive / Negative / Neutral)\n3. urgency: 긴급도 판별 (High / Low)",
+                "category": "데이터분석",
+                "favorite": False,
+                "views": 0
+            },
+            {
+                "title": "IT 뉴스 기사 자동 요약 및 분류",
+                "content": "당신은 최신 IT/기술 트렌드 뉴스 기사를 분석하고 요약하는 전문 AI 에디터입니다.\n입력된 뉴스 기사의 제목과 본문을 분석하여 핵심 내용을 3줄(문자열 배열)로 요약하고, 카테고리(AI / Dev/Cloud)를 분류해 주세요. 결과는 반드시 유효한 JSON 형식으로만 반환해야 합니다.",
+                "category": "데이터분석",
                 "favorite": False,
                 "views": 0
             }
