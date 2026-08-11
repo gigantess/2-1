@@ -6,6 +6,7 @@ import os
 DATA_FILE = 'prompts.json'
 
 def load_prompts():
+    """prompts.json 파일에서 데이터를 로드하고, 조회수(views) 속성을 초기화합니다."""
     global prompts
     if os.path.exists(DATA_FILE):
         try:
@@ -49,15 +50,29 @@ def load_prompts():
         ]
 
 def save_prompts():
+    """현재 메모리의 prompts 리스트를 DATA_FILE에 JSON 형식으로 영속화(저장)합니다."""
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(prompts, f, ensure_ascii=False, indent=4)
 
 def add_prompt():
+    """사용자로부터 프롬프트 제목, 내용, 카테고리를 입력받아 목록에 추가하고 저장합니다."""
     print("\n--- 프롬프트 추가 ---")
     title = input("제목을 입력하세요: ").strip()
     if not title:
         print("오류: 제목은 필수입니다.")
         return
+    if len(title) > 50:
+        print("오류: 제목은 50자를 초과할 수 없습니다.")
+        return
+        
+    # 중복 제목 검사 및 자동 접미사 부여 (_1, _2...)
+    original_title = title
+    suffix = 1
+    while any(p['title'] == title for p in prompts):
+        title = f"{original_title}_{suffix}"
+        suffix += 1
+    if title != original_title:
+        print(f"중복된 제목이 존재하여 '{title}'(으)로 변경되었습니다.")
         
     content = input("내용을 입력하세요: ").strip()
     if not content:
@@ -67,6 +82,9 @@ def add_prompt():
     category = input("카테고리를 입력하세요 (기본값: 일반): ").strip()
     if not category:
         category = "일반"
+    
+    # 카테고리 정규화 (모두 대문자로 변환하여 유사명 방지)
+    category = category.upper()
         
     prompts.append({
         "title": title,
@@ -79,6 +97,7 @@ def add_prompt():
     print("프롬프트가 성공적으로 추가되었습니다!")
 
 def show_list():
+    """전체 프롬프트 목록을 번호, 즐겨찾기 상태, 카테고리, 제목과 함께 출력합니다."""
     print("\n--- 프롬프트 목록 ---")
     if not prompts:
         print("등록된 프롬프트가 없습니다.")
@@ -89,6 +108,7 @@ def show_list():
         print(f"[{i}] {fav_star} [{p['category']}] {p['title']}")
 
 def show_by_category():
+    """저장된 전체 카테고리 목록을 보여주고, 사용자가 선택한 카테고리의 프롬프트만 출력합니다."""
     print("\n--- 카테고리별 보기 ---")
     categories = set(p['category'] for p in prompts)
     if not categories:
@@ -96,7 +116,7 @@ def show_by_category():
         return
         
     print(f"사용 가능한 카테고리: {', '.join(categories)}")
-    target_category = input("조회할 카테고리를 입력하세요: ").strip()
+    target_category = input("조회할 카테고리를 입력하세요: ").strip().upper()
     
     filtered_prompts = [(i, p) for i, p in enumerate(prompts, 1) if p['category'] == target_category]
     
@@ -109,6 +129,7 @@ def show_by_category():
         print(f"[{i}] {fav_star} [{p['category']}] {p['title']}")
 
 def search_prompt():
+    """입력받은 키워드가 제목이나 내용에 포함된(부분 문자열 검색) 프롬프트를 찾아 출력합니다."""
     print("\n--- 프롬프트 검색 ---")
     keyword = input("검색할 키워드를 입력하세요: ").strip().lower()
     
@@ -130,6 +151,7 @@ def search_prompt():
         print(f"[{i}] {fav_star} [{p['category']}] {p['title']}")
 
 def show_detail():
+    """선택한 번호의 프롬프트 상세 내용(제목, 카테고리, 내용)을 출력하고 조회수를 1 증가시킵니다."""
     print("\n--- 프롬프트 상세 보기 ---")
     if not prompts:
         print("등록된 프롬프트가 없습니다.")
@@ -154,6 +176,7 @@ def show_detail():
         print("숫자를 입력해야 합니다.")
 
 def toggle_favorite():
+    """선택한 번호의 프롬프트 즐겨찾기 상태(True/False)를 반전시킵니다."""
     print("\n--- 즐겨찾기 추가/삭제 ---")
     if not prompts:
         print("등록된 프롬프트가 없습니다.")
@@ -172,6 +195,7 @@ def toggle_favorite():
         print("숫자를 입력해야 합니다.")
 
 def show_favorites():
+    """즐겨찾기(favorite == True)로 설정된 프롬프트들만 모아서 출력합니다."""
     print("\n--- 즐겨찾기 목록 ---")
     favorites = [(i, p) for i, p in enumerate(prompts, 1) if p['favorite']]
     
@@ -183,6 +207,7 @@ def show_favorites():
         print(f"[{i}] ⭐ [{p['category']}] {p['title']}")
 
 def export_to_markdown():
+    """카테고리별로 프롬프트들을 그룹화하여, 카테고리명.md 파일로 내보냅니다."""
     categories = set(p['category'] for p in prompts)
     for cat in categories:
         filename = f"{cat}.md"
@@ -197,6 +222,7 @@ def export_to_markdown():
     print("마크다운 파일 내보내기가 완료되었습니다.")
 
 def top_views():
+    """조회수(views)가 가장 높은 상위 5개의 프롬프트를 내림차순으로 출력합니다."""
     print("\n--- 인기 프롬프트 (조회수순) ---")
     sorted_prompts = sorted(enumerate(prompts, 1), key=lambda x: x[1]['views'], reverse=True)
     if not sorted_prompts:
@@ -207,6 +233,7 @@ def top_views():
         print(f"[{i}] 조회수: {p['views']} | [{p['category']}] {p['title']}")
 
 def edit_prompt():
+    """선택한 프롬프트의 제목, 내용, 카테고리를 새 값으로 수정합니다. (엔터 시 기존 값 유지)"""
     print("\n--- 프롬프트 수정 ---")
     if not prompts:
         print("등록된 프롬프트가 없습니다.")
@@ -226,7 +253,7 @@ def edit_prompt():
             
             print(f"현재 카테고리: {p['category']}")
             category = input("새 카테고리 (엔터 시 유지): ").strip()
-            if category: p['category'] = category
+            if category: p['category'] = category.upper()
             
             save_prompts()
             print("프롬프트가 수정되었습니다.")
@@ -236,6 +263,7 @@ def edit_prompt():
         print("숫자를 입력해야 합니다.")
 
 def delete_prompt():
+    """선택한 프롬프트를 삭제합니다. 삭제 전 사용자에게 최종 확인을 받습니다."""
     print("\n--- 프롬프트 삭제 ---")
     if not prompts:
         print("등록된 프롬프트가 없습니다.")
@@ -257,6 +285,7 @@ def delete_prompt():
         print("숫자를 입력해야 합니다.")
 
 def show_menu():
+    """메인 메뉴 선택지를 터미널에 출력합니다."""
     print("\n" + "="*30)
     print("프롬프트 관리자")
     print("="*30)
@@ -275,6 +304,7 @@ def show_menu():
     print("="*30)
 
 def main():
+    """프로그램의 메인 진입점. 데이터를 로드하고 무한 루프를 통해 메뉴 선택을 처리합니다."""
     load_prompts()
     while True:
         show_menu()
