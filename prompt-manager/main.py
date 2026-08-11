@@ -2,6 +2,7 @@
 
 import json
 import os
+import sys
 
 DATA_FILE = 'prompts.json'
 
@@ -110,13 +111,23 @@ def show_list():
 def show_by_category():
     """저장된 전체 카테고리 목록을 보여주고, 사용자가 선택한 카테고리의 프롬프트만 출력합니다."""
     print("\n--- 카테고리별 보기 ---")
-    categories = set(p['category'] for p in prompts)
+    categories = sorted(set(p['category'] for p in prompts))
     if not categories:
         print("등록된 카테고리가 없습니다.")
         return
         
-    print(f"사용 가능한 카테고리: {', '.join(categories)}")
-    target_category = input("조회할 카테고리를 입력하세요: ").strip().upper()
+    print("사용 가능한 카테고리:")
+    for i, cat in enumerate(categories, 1):
+        print(f"[{i}] {cat}")
+        
+    cat_choice = input("조회할 카테고리 번호 또는 이름을 입력하세요: ").strip()
+    
+    # 인덱스 번호로 입력한 경우
+    if cat_choice.isdigit() and 1 <= int(cat_choice) <= len(categories):
+        target_category = categories[int(cat_choice) - 1]
+    else:
+        # 이름으로 입력한 경우
+        target_category = cat_choice.upper()
     
     filtered_prompts = [(i, p) for i, p in enumerate(prompts, 1) if p['category'] == target_category]
     
@@ -171,9 +182,9 @@ def show_detail():
             print(p['content'])
             print("-" * 30)
         else:
-            print("유효하지 않은 번호입니다.")
+            print("오류: 목록에 없는 번호입니다.")
     except ValueError:
-        print("숫자를 입력해야 합니다.")
+        print("오류: 리스트에 있는 유효한 메뉴 번호를 정확히 입력해 주세요.")
 
 def toggle_favorite():
     """선택한 번호의 프롬프트 즐겨찾기 상태(True/False)를 반전시킵니다."""
@@ -185,14 +196,18 @@ def toggle_favorite():
     try:
         idx = int(input("즐겨찾기를 설정/해제할 프롬프트 번호를 입력하세요: ")) - 1
         if 0 <= idx < len(prompts):
-            prompts[idx]['favorite'] = not prompts[idx]['favorite']
-            save_prompts()
-            status = "설정" if prompts[idx]['favorite'] else "해제"
-            print(f"'{prompts[idx]['title']}' 즐겨찾기가 {status}되었습니다.")
+            confirm = input(f"'{prompts[idx]['title']}' 프롬프트의 즐겨찾기 상태를 변경하시겠습니까? (y/n): ").strip().lower()
+            if confirm == 'y':
+                prompts[idx]['favorite'] = not prompts[idx]['favorite']
+                save_prompts()
+                status = "설정" if prompts[idx]['favorite'] else "해제"
+                print(f"'{prompts[idx]['title']}' 즐겨찾기가 {status}되었습니다.")
+            else:
+                print("즐겨찾기 상태 변경이 취소되었습니다.")
         else:
-            print("유효하지 않은 번호입니다.")
+            print("오류: 목록에 없는 번호입니다.")
     except ValueError:
-        print("숫자를 입력해야 합니다.")
+        print("오류: 리스트에 있는 유효한 메뉴 번호를 정확히 입력해 주세요.")
 
 def show_favorites():
     """즐겨찾기(favorite == True)로 설정된 프롬프트들만 모아서 출력합니다."""
@@ -258,9 +273,9 @@ def edit_prompt():
             save_prompts()
             print("프롬프트가 수정되었습니다.")
         else:
-            print("유효하지 않은 번호입니다.")
+            print("오류: 목록에 없는 번호입니다.")
     except ValueError:
-        print("숫자를 입력해야 합니다.")
+        print("오류: 리스트에 있는 유효한 메뉴 번호를 정확히 입력해 주세요.")
 
 def delete_prompt():
     """선택한 프롬프트를 삭제합니다. 삭제 전 사용자에게 최종 확인을 받습니다."""
@@ -280,9 +295,9 @@ def delete_prompt():
             else:
                 print("삭제가 취소되었습니다.")
         else:
-            print("유효하지 않은 번호입니다.")
+            print("오류: 목록에 없는 번호입니다.")
     except ValueError:
-        print("숫자를 입력해야 합니다.")
+        print("오류: 리스트에 있는 유효한 메뉴 번호를 정확히 입력해 주세요.")
 
 def show_menu():
     """메인 메뉴 선택지를 터미널에 출력합니다."""
@@ -306,37 +321,42 @@ def show_menu():
 def main():
     """프로그램의 메인 진입점. 데이터를 로드하고 무한 루프를 통해 메뉴 선택을 처리합니다."""
     load_prompts()
-    while True:
-        show_menu()
-        choice = input("메뉴를 선택하세요: ")
-        
-        if choice == '0':
-            print("프로그램을 종료합니다.")
-            break
-        elif choice == '1':
-            add_prompt()
-        elif choice == '2':
-            show_list()
-        elif choice == '3':
-            show_by_category()
-        elif choice == '4':
-            search_prompt()
-        elif choice == '5':
-            show_detail()
-        elif choice == '6':
-            toggle_favorite()
-        elif choice == '7':
-            show_favorites()
-        elif choice == '8':
-            export_to_markdown()
-        elif choice == '9':
-            top_views()
-        elif choice == '10':
-            edit_prompt()
-        elif choice == '11':
-            delete_prompt()
-        else:
-            print("준비 중인 기능입니다.")
+    try:
+        while True:
+            show_menu()
+            choice = input("메뉴를 선택하세요: ")
+            
+            if choice == '0':
+                print("프로그램을 종료합니다.")
+                break
+            elif choice == '1':
+                add_prompt()
+            elif choice == '2':
+                show_list()
+            elif choice == '3':
+                show_by_category()
+            elif choice == '4':
+                search_prompt()
+            elif choice == '5':
+                show_detail()
+            elif choice == '6':
+                toggle_favorite()
+            elif choice == '7':
+                show_favorites()
+            elif choice == '8':
+                export_to_markdown()
+            elif choice == '9':
+                top_views()
+            elif choice == '10':
+                edit_prompt()
+            elif choice == '11':
+                delete_prompt()
+            else:
+                print("준비 중인 기능입니다.")
+    except KeyboardInterrupt:
+        print("\n\n안전하게 프로그램을 종료합니다. (데이터 자동 저장)")
+        save_prompts()
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()
