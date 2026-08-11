@@ -1,7 +1,7 @@
 # 코디세이 2단계 미션: 프롬프트 매니저 (Prompt Manager)
 
 > **Python 3.10+** 및 **Git/GitHub** 환경 실습을 위한 콘솔 기반 AI 프롬프트 관리 프로그램입니다.
-> 🔗 **저장소 URL**: [https://github.com/your-username/step2-prompt-manager](https://github.com/your-username/step2-prompt-manager) (예시 URL)
+> 🔗 **저장소 URL**: [https://github.com/gigantess/2-1](https://github.com/gigantess/2-1)
 
 ---
 
