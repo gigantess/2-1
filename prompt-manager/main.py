@@ -117,6 +117,34 @@ def show_detail():
     except ValueError:
         print("숫자를 입력해야 합니다.")
 
+def toggle_favorite():
+    print("\n--- 즐겨찾기 토글 ---")
+    if not prompts:
+        print("등록된 프롬프트가 없습니다.")
+        return
+        
+    try:
+        idx = int(input("즐겨찾기를 설정/해제할 프롬프트 번호를 입력하세요: ")) - 1
+        if 0 <= idx < len(prompts):
+            prompts[idx]['favorite'] = not prompts[idx]['favorite']
+            status = "설정" if prompts[idx]['favorite'] else "해제"
+            print(f"'{prompts[idx]['title']}' 즐겨찾기가 {status}되었습니다.")
+        else:
+            print("유효하지 않은 번호입니다.")
+    except ValueError:
+        print("숫자를 입력해야 합니다.")
+
+def show_favorites():
+    print("\n--- 즐겨찾기 목록 ---")
+    favorites = [(i, p) for i, p in enumerate(prompts, 1) if p['favorite']]
+    
+    if not favorites:
+        print("즐겨찾기된 프롬프트가 없습니다.")
+        return
+        
+    for i, p in favorites:
+        print(f"[{i}] ⭐ [{p['category']}] {p['title']}")
+
 def show_menu():
     print("\n" + "="*30)
     print("프롬프트 관리자")
@@ -149,6 +177,10 @@ def main():
             search_prompt()
         elif choice == '5':
             show_detail()
+        elif choice == '6':
+            toggle_favorite()
+        elif choice == '7':
+            show_favorites()
         else:
             print("준비 중인 기능입니다.")
 
