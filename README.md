@@ -1,6 +1,6 @@
 # 코디세이 2단계 미션: 프롬프트 매니저 (Prompt Manager)
 
-> **Python 3.10+** 및 **Git/GitHub** 환경 실습을 위한 콘솔 기반 AI 프롬프트 관리 프로그램입니다.
+> **Python 3.14+** 및 **Git/GitHub** 환경 실습을 위한 콘솔 기반 AI 프롬프트 관리 프로그램입니다.
 > 🔗 **저장소 URL**: [https://github.com/gigantess/2-1](https://github.com/gigantess/2-1)
 
 ---
@@ -10,7 +10,7 @@
 GenAI 활용에 필수적인 프롬프트(텍스트 요약, 이미지 생성, 페르소나 부여 등)를 체계적으로 관리, 분류, 검색, 탐색하는 프로그램입니다.
 
 ### 주요 학습 달성 목표
-- **Antigravity IDE & Python**: Python 3.10 이상 개발 환경 구축 및 함수 기반 모듈화 파이썬 프로그래밍 구현.
+- **Antigravity IDE & Python**: Python 3.14 이상 개발 환경 구축 및 함수 기반 모듈화 파이썬 프로그래밍 구현.
 - **Git & GitHub 필수 명령어**: Version Control System(VCS)의 원리를 이해하고 필수 명령어 8종 실습 완료.
 - **브랜치 활용 전략**: 기능 개발 브랜치(`feature/list-prompts`)를 생성, 체크아웃(`checkout`), 병합(`merge`)하여 코드 이력을 체계적으로 관리.
 
@@ -19,13 +19,13 @@ GenAI 활용에 필수적인 프롬프트(텍스트 요약, 이미지 생성, �
 ## 🛠 2. 개발 환경 구축 (Development Environment)
 
 * **Editor**: Antigravity IDE (Agentic Coding Environment)
-* **Language**: Python 3.10 이상
-* **VCS**: Git 2.x / GitHub
+* **Language**: Python 3.14.3 (권장)
+* **VCS**: Git 2.52.0 / GitHub
 * **OS**: Windows
 
 ### 개발 환경 점검 및 Git 초기 설정 명령어
 ```bash
-# 1. Python 버전 확인 (3.10 이상 필수)
+# 1. Python 버전 확인 (3.14 이상 권장)
 python --version   # 또는 python3 --version
 
 # 2. Git 버전 확인 및 기본 설정
@@ -170,6 +170,6 @@ git log --oneline --graph
 
 ## ✅ 8. 최종 결과물 체크리스트
 - [x] GitHub 저장소 URL: 공개(Public) 권한 설정
-- [x] 개발 환경 설정 스크린샷: VSCode, Python 3.10+ 버전, Git config 설정 화면
+- [x] 개발 환경 설정 스크린샷: Antigravity IDE, Python 3.14+ 버전, Git config 설정 화면
 - [x] 프로그램 실행 결과 스크린샷: 메뉴, 프롬프트 추가, 목록, 검색, 상세 보기, 즐겨찾기 실행 화면
 - [x] Git 로그 스크린샷: `git log --oneline --graph` 실행 화면 (최소 10개 커밋 및 브랜치 병합 내역 포함)
